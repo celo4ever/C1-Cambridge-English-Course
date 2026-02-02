@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ready for Advanced - C1 English Practice</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState } = React;
+
+    // Icons as simple SVG components
+    const Icon = ({ name, size = 24, className = "" }) => {
+      const icons = {
+        Book: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,
+        CheckCircle: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>,
+        XCircle: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>,
+        ArrowLeft: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>,
+        ChevronRight: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="9 18 15 12 9 6"/></svg>,
+        BookOpen: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
+        PenTool: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>,
+        GraduationCap: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>,
+        RotateCcw: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>,
+        FileText: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,
+        Notebook: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2 6h4"/><path d="M2 10h4"/><path d="M2 14h4"/><path d="M2 18h4"/><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M16 2v20"/></svg>,
+      };
+      return icons[name] || null;
+    };
+
+    // ============================================
+    // DATA: Units Structure
+    // ============================================
+    const unitsData = {
+      1: {
+        title: "Unit 1: Aiming High",
+        sbTitle: "Challenge and Achievement",
+        wbTitle: "Practice Exercises",
+        description: "Modal verbs, adverbs of degree, collocations for challenge and achievement",
+      },
+      2: { title: "Unit 2: Times Change", sbTitle: "Talking about the Past", wbTitle: "Practice Exercises", description: "Coming soon" },
+      3: { title: "Unit 3: Gathering Information", sbTitle: "Conditionals", wbTitle: "Practice Exercises", description: "Coming soon" },
+      4: { title: "Unit 4: All in a Day's Work", sbTitle: "Gerunds and Infinitives", wbTitle: "Practice Exercises", description: "Coming soon" },
+      5: { title: "Unit 5: Getting On", sbTitle: "Relative Clauses", wbTitle: "Practice Exercises", description: "Coming soon" },
+    };
+
+    // ============================================
+    // VOCABULARY IN USE - UNIT 60: Success, Failure and Difficulty
+    // ============================================
+    const viuUnit60Theory = {
+      sections: [
+        {
+          title: "A. Succeeding",
+          content: `**Key verbs for success:**
+• We **succeeded in** persuading a lot of people to join our protest. (in + -ing)
+• I **managed to** contact him just before he left his office.
+• I don't think I can **manage** the whole walk. I think I'll turn back. (manage may have a direct object)
+• We've **achieved / accomplished** a great deal in the last year. (used with quantity phrases)
+• The company has **achieved** all its goals/aims/targets for this year.
+• Do you think his plan will **come off**? [succeed; informal]
+
+**Collocations matrix - which verbs go with which nouns:**
+• **reach** + an agreement, a compromise
+• **attain** + an ambition (formal)
+• **secure** + an agreement
+• **realise** + an ambition, a dream
+• **fulfil** + an ambition, a dream, an obligation
+• **achieve** + an ambition, a target, a compromise`
+        },
+        {
+          title: "B. Failing and Difficulty",
+          content: `**Expressions for failure:**
+• Plans and projects sometimes **go wrong / backfire**. [don't go as intended]
+• Companies, clubs and societies often **fold / go under** through lack of success. [close down]
+• A plan or project may **falter**, even if it finally succeeds. [have ups and downs]
+• All your plans and hard work / efforts may **come to nothing**.
+
+**Expressions for difficulty:**
+• I have great **difficulty (in)** getting up in the morning.
+• I **find it difficult to** remember the names of everybody in the class.
+• It's **hard/difficult to** hear what she's saying.
+• I often **have trouble** starting the car on cold mornings. (more informal)
+• We've had a lot of **bother** with the neighbours lately. (very informal)
+• Can you **cope with** three more students? [deal successfully with a difficult situation]
+• I've got no money and my girlfriend's left me. I need help; I can't **cope** any more.`
+        },
+        {
+          title: "C. Word Formation",
+          content: `**Verb → Noun → Adjective → Adverb:**
+• succeed → success → successful → successfully
+• accomplish → accomplishment → accomplished → -
+• achieve → achievement → achievable → -
+• attain → attainment → attainable → -
+• fulfil → fulfilment → fulfilling → -
+• harden → hardness → hard → hard
+
+**Common mistakes to avoid:**
+• ✗ "Izzy had great difficulties finding somewhere to live"
+• ✓ "Izzy had great **difficulty** finding somewhere to live" (uncountable)
+• ✗ "Paul had considerable successes with his first novel"
+• ✓ "Paul had considerable **success** with his first novel" (uncountable)`
+        }
+      ]
+    };
+
+    const viuUnit60Exercises = [
+      {
+        id: "viu60.1",
+        title: "60.1 Verb + Noun Collocations",
+        type: "fill-select",
+        instruction: "Choose a suitable verb to fill the gaps. More than one verb is often possible.",
+        wordBank: ["reach", "fulfil", "achieve", "realise", "secure", "come"],
+        questions: [
+          { sentence: "The management have ___ a no-strike agreement with the union.", answer: "reached" },
+          { sentence: "Now I've ___ all my family responsibilities, I can retire and travel the world.", answer: "fulfilled" },
+          { sentence: "The school building fund has failed to ___ its target of £250,000.", answer: "reach" },
+          { sentence: "I never thought I would ___ my ambition, but now I have.", answer: "realise" },
+          { sentence: "Very few people ___ all their hopes and dreams in life.", answer: "fulfil" },
+          { sentence: "We hope the two sides ___ a compromise and avoid war.", answer: "reach" },
+          { sentence: "I'm afraid that little plan of mine didn't ___ off.", answer: "come" }
+        ]
+      },
+      {
+        id: "viu60.2",
+        title: "60.2 Word Formation Table",
+        type: "word-formation-suffix",
+        instruction: "Fill in the missing word forms.",
+        questions: [
+          { sentence: "The noun form of 'realise' is ___.", base: "REALISE", answer: "realisation" },
+          { sentence: "The adjective form of 'difficulty' is ___.", base: "DIFFICULTY", answer: "difficult" },
+          { sentence: "The verb form of 'target' is ___.", base: "TARGET", answer: "target" },
+          { sentence: "The noun form of 'fail' is ___.", base: "FAIL", answer: "failure" },
+          { sentence: "The adjective form of 'trouble' is ___.", base: "TROUBLE", answer: "troublesome" }
+        ]
+      },
+      {
+        id: "viu60.3",
+        title: "60.3 Error Correction",
+        type: "error-correction",
+        instruction: "Each sentence has one mistake. Find and correct it.",
+        questions: [
+          { sentence: "I find very difficult to understand English idioms.", error: "find very difficult", correction: "find it very difficult", explanation: "We need 'it' as a dummy object: 'find it difficult to...'" },
+          { sentence: "She succeeded to rise to the top of her profession.", error: "succeeded to rise", correction: "succeeded in rising", explanation: "'Succeed' takes 'in + -ing', not 'to + infinitive'" },
+          { sentence: "Do you ever have any trouble to use this photocopier?", error: "trouble to use", correction: "trouble using", explanation: "'Have trouble' takes '-ing', not 'to + infinitive'" },
+          { sentence: "I've accomplished to work quite hard this last month.", error: "accomplished to work", correction: "managed to work", explanation: "'Accomplish' doesn't take 'to + infinitive'. Use 'manage to' instead." },
+          { sentence: "I'm amazed that you can cope all the work they give you.", error: "cope all", correction: "cope with all", explanation: "'Cope' requires the preposition 'with'" },
+          { sentence: "Did you have many difficulties finding the book?", error: "difficulties", correction: "difficulty", explanation: "'Difficulty' is uncountable in this context" },
+          { sentence: "All Johnny's plans have come at nothing.", error: "come at nothing", correction: "come to nothing", explanation: "The expression is 'come to nothing'" },
+          { sentence: "I haven't had any successes in contacting Lara today.", error: "successes", correction: "success", explanation: "'Success' is uncountable in this context" }
+        ]
+      },
+      {
+        id: "viu60.4",
+        title: "60.4 Expressions for Failure",
+        type: "match-meanings",
+        instruction: "Match each sentence with the expression that best describes what happened.",
+        questions: [
+          { sentence: "The company closed down because it wasn't making money.", meaning: "fold / go under", options: ["go wrong", "backfire", "fold / go under", "falter", "come to nothing"] },
+          { sentence: "My plan to surprise her actually made her angry instead.", meaning: "backfire", options: ["go wrong", "backfire", "fold / go under", "falter", "come to nothing"] },
+          { sentence: "The project had some problems but eventually succeeded.", meaning: "falter", options: ["go wrong", "backfire", "fold / go under", "falter", "come to nothing"] },
+          { sentence: "Despite all our efforts, we achieved absolutely nothing.", meaning: "come to nothing", options: ["go wrong", "backfire", "fold / go under", "falter", "come to nothing"] },
+          { sentence: "Something wasn't right - the event didn't go as planned.", meaning: "go wrong", options: ["go wrong", "backfire", "fold / go under", "falter", "come to nothing"] }
+        ]
+      },
+      {
+        id: "viu60.5",
+        title: "60.5 Difficulty Expressions",
+        type: "fill-select",
+        instruction: "Complete the sentences with the correct word.",
+        wordBank: ["difficulty", "trouble", "bother", "cope", "hard", "manage"],
+        questions: [
+          { sentence: "I have great ___ remembering people's names.", answer: "difficulty" },
+          { sentence: "We've had a lot of ___ with the new software - it keeps crashing.", answer: "trouble" },
+          { sentence: "It's ___ to concentrate when there's so much noise.", answer: "hard" },
+          { sentence: "Can you ___ with all this extra work?", answer: "cope" },
+          { sentence: "I didn't ___ to finish the project on time.", answer: "manage" },
+          { sentence: "Don't go to any ___ - I can make my own dinner.", answer: "bother" }
+        ]
+      }
+    ];
+
+    // ============================================
+    // UNIT 1 THEORY
+    // ============================================
+    const unit1Theory = {
+      sections: [
+        {
+          title: "Modal Verbs: Might, Could, May and Can",
+          content: `**MIGHT** can express:
+• **Future possibility**: I might be home a bit later tonight.
+• **Present possibility**: There might be something good on TV.
+• **Past possibility**: They might have taken a wrong turning.
+• **Annoyance/criticism**: You might at least help me carry this!
+• **Lack of enthusiasm**: We might as well go to bed.
+• **Concession** (even though): He might be good-looking, but he can't sing.
+
+**Substitutions:**
+• might → could (sentences expressing possibility or criticism)
+• might → may (sentences expressing possibility, lack of enthusiasm, concession)
+
+**CAN/CAN'T** can express:
+• **Ability**: It can store up to 70,000 images.
+• **Criticism**: You can be really irritating sometimes!
+• **Request**: Can you take my calls this afternoon?
+• **Inability**: I can't do it – I'm not tall enough.
+• **Deduction**: It can't be very healthy if it contains that!
+• **Prohibition**: No, you can't! 1 am is far too late.
+
+**Useful phrases for probability:**
+• "every likelihood" / "highly likely" = probably will happen
+• "little chance" / "unlikely" = probably won't happen
+• "a distinct possibility" = might happen`
+        },
+        {
+          title: "Adverbs of Degree",
+          content: `Adverbs of degree modify adjectives to intensify or weaken their meaning.
+
+**Gradable adjectives** (can vary in intensity):
+• very/quite/fairly + difficult, risky, tiring, pleased, ambitious
+
+**Non-gradable adjectives** (absolute/extreme):
+• absolutely/completely/utterly + impossible, exhausted, incredible, ridiculous
+
+**Note on "quite":**
+• With gradable adjectives: "quite good" = fairly good
+• With non-gradable adjectives: "quite fantastic" = absolutely fantastic
+
+**Common adverb + adjective collocations:**
+• **perfectly** + clear, normal, capable
+• **highly** + gifted, promising, talented, qualified
+• **fully** + qualified, booked, equipped, informed
+• **wholly** + inappropriate, inadequate, unacceptable
+• **entirely** + free of charge, different, wrong
+• **utterly** + ridiculous, disgraceful, opposed
+• **totally** + unnecessary, unexpected, independent
+• **bitterly** + resent, regret, disappointed
+• **fiercely** + ambitious, proud, loyal`
+        },
+        {
+          title: "Vocabulary: Challenge and Achievement",
+          content: `**Collocations with CHALLENGE:**
+• face / take up / rise to + a challenge
+• formidable / daunting / major / new challenge
+
+**Collocations with CHANCE:**
+• stand a chance (of)
+• jump at the chance
+• slight / fair / second chance
+
+**Collocations with SUCCESS:**
+• achieve / enjoy success
+• overnight / resounding / huge success
+
+**Collocations with FAILURE:**
+• end in / result in failure
+• total / costly / dismal failure
+• meet with complete failure
+
+**Collocations with AMBITION:**
+• fulfil / realise an ambition
+• burning / lifelong / secret / main ambition
+
+**Collocations with MOTIVATION:**
+• improve / lack motivation
+• primary / strong / poor motivation
+
+**Other useful expressions:**
+• leave nothing to chance (= plan everything carefully)`
+        },
+        {
+          title: "Word Formation: Nouns",
+          content: `Common suffixes to form nouns from verbs and adjectives:
+
+• **-ment**: achieve → achievement, refresh → refreshment
+• **-tion/-ation**: motivate → motivation, realise → realisation
+• **-ure**: fail → failure, close → closure
+• **-ance/-ence**: appear → appearance, rely → reliance
+• **-ity**: able → ability, anxious → anxiety
+• **-ness**: selfish → selfishness, tired → tiredness
+• **-ship**: member → membership, leader → leadership
+• **-hood**: neighbour → neighbourhood, child → childhood
+• **-al**: propose → proposal, arrive → arrival
+• **-age**: store → storage, pack → package
+• **-cy**: efficient → efficiency, vacant → vacancy
+
+**Negative prefixes for nouns:**
+• un- (unawareness), in- (inability), im- (impossibility), dis- (disapproval)
+
+**Word stress in nouns:**
+• Nouns ending in -ity, -tion, -sion: stress on syllable BEFORE suffix
+  motivate → motiVAtion, able → aBILity
+• Nouns ending in -iety: stress on the 'i'
+  anxious → anxIety, social → socIety`
+        }
+      ]
+    };
+
+    // ============================================
+    // UNIT 1 EXERCISES - STUDENT BOOK
+    // ============================================
+    const unit1SBExercises = [
+      {
+        id: "sb1.1",
+        title: "Vocabulary: Complete the Collocations",
+        type: "fill-select",
+        instruction: "Complete the expressions with a noun from the box.",
+        wordBank: ["ambition", "challenge", "chance", "failure", "motivation", "success"],
+        questions: [
+          { sentence: "The film was an overnight ___, despite its low budget.", answer: "success" },
+          { sentence: "I have a burning ___ to travel to Australia.", answer: "ambition" },
+          { sentence: "When pupils tire of studying, a system of rewards can help increase student ___.", answer: "motivation" },
+          { sentence: "Sadly, my attempts to learn Japanese met with complete ___.", answer: "failure" },
+          { sentence: "The government faces the formidable ___ of reducing unemployment.", answer: "challenge" },
+          { sentence: "He leaves nothing to ___ and plans everything before a trip.", answer: "chance" }
+        ]
+      },
+      {
+        id: "sb1.2",
+        title: "Verb + Noun Collocations",
+        type: "match-collocations",
+        instruction: "Match the verbs with the nouns they collocate with. Each noun can have TWO verbs.",
+        pairs: [
+          { verbs: ["fulfil", "realise"], noun: "ambition" },
+          { verbs: ["end in", "result in"], noun: "failure" },
+          { verbs: ["achieve", "enjoy"], noun: "success" },
+          { verbs: ["improve", "lack"], noun: "motivation" },
+          { verbs: ["stand a", "jump at the"], noun: "chance" },
+          { verbs: ["take up", "rise to the"], noun: "challenge" }
+        ]
+      },
+      {
+        id: "sb1.3",
+        title: "Adjective + Noun Collocations",
+        type: "categorize",
+        instruction: "All three adjectives in each group collocate with ONE noun. Write the noun.",
+        questions: [
+          { adjectives: ["major", "new", "daunting"], answer: "challenge", acceptedAnswers: ["challenge", "challenges"] },
+          { adjectives: ["slight", "fair", "second"], answer: "chance", acceptedAnswers: ["chance"] },
+          { adjectives: ["secret", "lifelong", "main"], answer: "ambition", acceptedAnswers: ["ambition"] },
+          { adjectives: ["total", "costly", "dismal"], answer: "failure", acceptedAnswers: ["failure"] },
+          { adjectives: ["huge", "great", "resounding"], answer: "success", acceptedAnswers: ["success"] },
+          { adjectives: ["primary", "strong", "poor"], answer: "motivation", acceptedAnswers: ["motivation"] }
+        ]
+      },
+      {
+        id: "sb1.4",
+        title: "Modal Verbs: Match Meanings",
+        type: "match-meanings",
+        instruction: "Match each sentence with the meaning it expresses.",
+        questions: [
+          { sentence: "This box is really heavy. You might at least help me carry it!", meaning: "annoyance", options: ["future possibility", "past possibility", "annoyance", "lack of enthusiasm", "concession"] },
+          { sentence: "I wish you'd drive more carefully. You might have had an accident back there.", meaning: "past possibility (criticism)", options: ["future possibility", "past possibility (criticism)", "present possibility", "lack of enthusiasm", "concession"] },
+          { sentence: "I might be home a bit later tonight. I've got a meeting at five.", meaning: "future possibility", options: ["future possibility", "past possibility", "annoyance", "lack of enthusiasm", "present possibility"] },
+          { sentence: "Put the TV on – there might be something good on.", meaning: "present possibility", options: ["future possibility", "past possibility", "present possibility", "lack of enthusiasm", "concession"] },
+          { sentence: "There's nothing worth watching, so we might as well go to bed.", meaning: "lack of enthusiasm", options: ["annoyance", "past possibility", "present possibility", "lack of enthusiasm", "concession"] },
+          { sentence: "He might be good-looking, but he can't sing very well.", meaning: "concession", options: ["annoyance", "future possibility", "present possibility", "lack of enthusiasm", "concession"] }
+        ]
+      },
+      {
+        id: "sb1.5",
+        title: "Adverbs of Degree: Cross Out Incorrect",
+        type: "select-incorrect",
+        instruction: "Cross out the word which does NOT normally collocate with the adverb.",
+        questions: [
+          { adverb: "perfectly", words: ["clear", "normal", "capable", "dependent"], incorrect: "dependent", explanation: "We say 'perfectly clear/normal/capable' but 'wholly/totally dependent'" },
+          { adverb: "highly", words: ["gifted", "promising", "talented", "worried"], incorrect: "worried", explanation: "We say 'highly gifted/promising/talented' but 'extremely/very worried'" },
+          { adverb: "fully", words: ["qualified", "booked", "equipped", "clever"], incorrect: "clever", explanation: "We say 'fully qualified/booked/equipped' but 'very/extremely clever'" },
+          { adverb: "wholly", words: ["inappropriate", "inadequate", "unacceptable", "informed"], incorrect: "informed", explanation: "We say 'wholly inappropriate/inadequate/unacceptable' but 'fully/well informed'" },
+          { adverb: "entirely", words: ["free of charge", "different", "wrong", "old"], incorrect: "old", explanation: "We say 'entirely free/different/wrong' but 'very/quite old'" },
+          { adverb: "utterly", words: ["ridiculous", "disgraceful", "opposed", "qualified"], incorrect: "qualified", explanation: "We say 'utterly ridiculous/disgraceful' but 'fully/highly qualified'" },
+          { adverb: "bitterly", words: ["resent", "regret", "disappointed", "dislike"], incorrect: "dislike", explanation: "We say 'bitterly resent/regret/disappointed' but 'strongly dislike'" },
+          { adverb: "fiercely", words: ["ambitious", "proud", "loyal", "generous"], incorrect: "generous", explanation: "We say 'fiercely ambitious/proud/loyal' but 'extremely/very generous'" }
+        ]
+      },
+      {
+        id: "sb1.6",
+        title: "Word Formation: Noun Suffixes",
+        type: "word-formation-suffix",
+        instruction: "Complete the sentences with a noun form of the word in CAPITALS. Make spelling changes as necessary.",
+        questions: [
+          { sentence: "Refreshments are available from 3.30 pm in the main hall.", base: "REFRESH", answer: "refreshments" },
+          { sentence: "Union members expressed their ___ of the management's offer.", base: "APPROVE", answer: "disapproval" },
+          { sentence: "In her ___ to receive the award, she almost tripped on the stage.", base: "EAGER", answer: "eagerness" },
+          { sentence: "In the interests of safety, a number of standard ___ need to be followed.", base: "PROCEED", answer: "procedures" },
+          { sentence: "Her 5000-metre run paled into ___ when compared with the marathon.", base: "SIGNIFY", answer: "insignificance" },
+          { sentence: "The ___ of the device is what has made it so popular.", base: "SIMPLE", answer: "simplicity" },
+          { sentence: "I cannot comment; I have been sworn to ___ on the matter.", base: "SECRET", answer: "secrecy" },
+          { sentence: "The cost of ___ has increased by 10 per cent this year.", base: "MEMBER", answer: "membership" },
+          { sentence: "Customers will be required to pay for any ___.", base: "BREAK", answer: "breakages" },
+          { sentence: "There is every ___ that prices will continue to rise.", base: "LIKELY", answer: "likelihood" },
+          { sentence: "He valued his ___ too much to ever want to get married.", base: "DEPEND", answer: "independence" },
+          { sentence: "It's natural to experience ___ on your first day at work.", base: "ANXIOUS", answer: "anxiety" }
+        ]
+      }
+    ];
+
+    // ============================================
+    // UNIT 1 EXERCISES - WORKBOOK
+    // ============================================
+    const unit1WBExercises = [
+      {
+        id: "wb1.1",
+        title: "Modal Verbs - Cross Out Incorrect",
+        type: "select-incorrect-modal",
+        instruction: "In each sentence, one of the three alternatives is INCORRECT. Select it.",
+        questions: [
+          { sentence: "You ___ enter the building without an employee pass.", options: ["might not", "may not", "cannot"], incorrect: "might not", explanation: "'Might not' doesn't work for prohibition/rules. Use 'cannot' or 'may not' for rules." },
+          { sentence: "You ___ have told me you weren't coming home for dinner!", options: ["might", "may", "could"], incorrect: "may", explanation: "'May have' is rarely used for criticism/reproach. Use 'might have' or 'could have'." },
+          { sentence: "That's not my handwriting – it ___ be Lara's, though.", options: ["might", "could", "can"], incorrect: "can", explanation: "'Can' is not typically used for speculation about specific situations. Use 'might' or 'could'." },
+          { sentence: "William ___ at least offer to pay for the damage he caused!", options: ["might", "may", "could"], incorrect: "may", explanation: "'May at least' is not used for criticism. Use 'might at least' or 'could at least'." },
+          { sentence: "I know parties aren't your thing, but you ___ as well try and enjoy yourself.", options: ["might", "may", "could"], incorrect: "could", explanation: "'Could as well' is not a standard expression. Use 'might as well' or 'may as well'." }
+        ]
+      },
+      {
+        id: "wb1.2",
+        title: "Adverbs of Degree - Fill in the Blanks",
+        type: "fill-adverb-pairs",
+        instruction: "Complete each gap with an adverb from the box. Use the same adverb for BOTH gaps in each pair.",
+        wordBank: ["bitterly", "entirely", "fiercely", "fully", "highly", "perfectly", "quite", "utterly", "wholly"],
+        questions: [
+          { sentences: ["Her behaviour was ___ disgraceful.", "By the time I arrived, I was ___ exhausted."], answer: "utterly" },
+          { sentences: ["As a child, she was ___ gifted.", "You'll only succeed if you're ___ motivated."], answer: "highly" },
+          { sentences: ["I'm afraid we're ___ booked on those dates.", "All our consultants are ___ qualified."], answer: "fully" },
+          { sentences: ["This service is ___ free of charge to our existing customers.", "I'm not ___ sure what to do next."], answer: "entirely" },
+          { sentences: ["Don't worry. It's ___ normal to be nervous.", "I'm ___ capable of making my own decisions."], answer: "perfectly" },
+          { sentences: ["I ___ resented my colleague for landing the promotion.", "I was ___ disappointed by my results."], answer: "bitterly" },
+          { sentences: ["He's always been ___ ambitious.", "They are all ___ loyal to their old boss."], answer: "fiercely" },
+          { sentences: ["Tom is ___ angry with Maria.", "Winning a gold medal at her age is ___ remarkable."], answer: "quite" },
+          { sentences: ["That kind of behaviour at work is ___ unacceptable.", "The mayor wasn't ___ to blame for the crisis."], answer: "wholly" }
+        ]
+      },
+      {
+        id: "wb1.3",
+        title: "Verb + Noun Collocations - Fill Gaps",
+        type: "fill-verb-collocations",
+        instruction: "Complete each sentence with the correct form of a verb from the box.",
+        wordBank: ["enjoy", "face", "jump", "lack", "leave", "meet", "realise", "rise", "stand"],
+        questions: [
+          { sentence: "The organisers said I could use their computer, but I decided to ___ nothing to chance and took my laptop.", answer: "leave", acceptedForms: ["leave"] },
+          { sentence: "At first, we thought you wouldn't cope, but we're delighted with the way you've ___ to the challenge.", answer: "risen", acceptedForms: ["risen", "rise"] },
+          { sentence: "Helen decided to enter the race, even though she didn't ___ a chance of winning.", answer: "stand", acceptedForms: ["stand"] },
+          { sentence: "At one point, I was tempted to close my business because of all the formidable challenges I ___.", answer: "faced", acceptedForms: ["faced", "face"] },
+          { sentence: "I've fulfilled most of my ambitions, but there's one that I'll probably never ___.", answer: "realise", acceptedForms: ["realise", "realize"] },
+          { sentence: "Bryan's attempts at humour were ___ with complete failure.", answer: "met", acceptedForms: ["met", "meet"] },
+          { sentence: "When I was a singer, I ___ limited success for a few years.", answer: "enjoyed", acceptedForms: ["enjoyed", "enjoy"] },
+          { sentence: "The problem with most entrepreneurs is not that they ___ motivation.", answer: "lack", acceptedForms: ["lack"] },
+          { sentence: "When I was offered the opportunity, I ___ at the chance.", answer: "jumped", acceptedForms: ["jumped", "jump"] }
+        ]
+      },
+      {
+        id: "wb1.4",
+        title: "Grace Under Fire - Adjective + Noun Collocations",
+        type: "multiple-choice-story",
+        instruction: "Choose the most suitable adjective to complete each gap in the story.",
+        story: "Grace Spellacy always enjoyed cooking, but it wasn't enough just to cook for her friends and family. Since early childhood, she'd always had a (1)___ ambition to open her own restaurant. Of course, Grace realised she couldn't simply open a restaurant and expect to be (2)___ success, but she thought she stood a (3)___ chance of success.\n\nGrace never imagined all the (4)___ challenges she would face. The problem was that her (5)___ motivation had always been to cook great food rather than to make money – and her first restaurant was an extremely (6)___ failure.\n\nFor a while, it looked as if Grace would never fulfil her (7)___ ambition, but then she was given a (8)___ chance when a group of investors offered to go into business with her. Second time round, Grace's Place has been a (9)___ success.",
+        questions: [
+          { number: 1, options: ["burning", "complete", "resounding"], answer: "burning" },
+          { number: 2, options: ["a main", "an overnight", "a strong"], answer: "an overnight" },
+          { number: 3, options: ["fair", "formidable", "major"], answer: "fair" },
+          { number: 4, options: ["daunting", "strong", "total"], answer: "daunting" },
+          { number: 5, options: ["burning", "formidable", "primary"], answer: "primary" },
+          { number: 6, options: ["costly", "poor", "strong"], answer: "costly" },
+          { number: 7, options: ["daunting", "huge", "lifelong"], answer: "lifelong" },
+          { number: 8, options: ["complete", "primary", "second"], answer: "second" },
+          { number: 9, options: ["burning", "resounding", "strong"], answer: "resounding" }
+        ]
+      },
+      {
+        id: "wb1.5",
+        title: "Word Formation - The Price of Success",
+        type: "word-formation-text",
+        instruction: "Use the word given in CAPITALS to form a word that fits in the gap.",
+        questions: [
+          { sentence: "When you witness the incredible ___ of young athletes...", base: "ACHIEVE", answer: "achievements" },
+          { sentence: "...it's tempting to feel a pang of ___ at their success.", base: "JEALOUS", answer: "jealousy" },
+          { sentence: "...born with such amazing talents and ___.", base: "ABLE", answer: "abilities" },
+          { sentence: "...years of continuous efforts in ___ of their goals.", base: "PURSUE", answer: "pursuit" },
+          { sentence: "...the sacrifice of anything resembling a normal ___.", base: "CHILD", answer: "childhood" },
+          { sentence: "...or simply relaxing for ___.", base: "PLEASE", answer: "pleasure" },
+          { sentence: "...spent every waking hour training ___.", base: "RELENT", answer: "relentlessly" },
+          { sentence: "...years of mental and physical ___.", base: "EXHAUST", answer: "exhaustion" }
+        ]
+      }
+    ];
+
+    // ============================================
+    // COMPONENTS
+    // ============================================
+
+    const ExerciseResult = ({ isCorrect, showResult }) => {
+      if (!showResult) return null;
+      return (
+        <span className={`ml-2 inline-flex items-center ${isCorrect ? 'text-green-600' : 'text-red-500'}`}>
+          {isCorrect ? <Icon name="CheckCircle" size={18} /> : <Icon name="XCircle" size={18} />}
+        </span>
+      );
+    };
+
+    // Generic Fill Select Exercise
+    const FillSelectExercise = ({ exercise, onComplete }) => {
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+
+      const checkAnswer = (userAnswer, correctAnswer) => {
+        return (userAnswer || '').toLowerCase().trim() === correctAnswer.toLowerCase();
+      };
+
+      const checkAnswers = () => {
+        setShowResults(true);
+        const allCorrect = exercise.questions.every((q, i) => checkAnswer(answers[i], q.answer));
+        if (allCorrect) onComplete?.();
+      };
+
+      const reset = () => { setAnswers({}); setShowResults(false); };
+
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-600 italic">{exercise.instruction}</p>
+          <div className="flex flex-wrap gap-2 p-3 bg-blue-50 rounded-lg">
+            <span className="text-blue-700 font-medium">Word bank:</span>
+            {exercise.wordBank.map((word, i) => (
+              <span key={i} className="bg-white px-2 py-1 rounded border text-sm">{word}</span>
+            ))}
+          </div>
+          {exercise.questions.map((q, index) => {
+            const isCorrect = checkAnswer(answers[index], q.answer);
+            const parts = q.sentence.split('___');
+            return (
+              <div key={index} className={`p-4 rounded-lg ${showResults ? isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' : 'bg-gray-50'}`}>
+                <p>
+                  {index + 1}. {parts[0]}
+                  <input
+                    type="text"
+                    value={answers[index] || ''}
+                    onChange={(e) => setAnswers(prev => ({ ...prev, [index]: e.target.value }))}
+                    className={`mx-1 px-2 py-1 border rounded w-28 ${showResults ? isCorrect ? 'border-green-500 bg-green-100' : 'border-red-400 bg-red-100' : 'border-gray-400'}`}
+                  />
+                  {parts[1]}
+                  <ExerciseResult isCorrect={isCorrect} showResult={showResults} />
+                </p>
+                {showResults && !isCorrect && <p className="text-sm text-red-600 mt-1">Correct: {q.answer}</p>}
+              </div>
+            );
+          })}
+          <div className="flex gap-3">
+            <button onClick={checkAnswers} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Check Answers</button>
+            <button onClick={reset} className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center gap-2"><Icon name="RotateCcw" size={16} /> Reset</button>
+          </div>
+        </div>
+      );
+    };
+
+    // Match Collocations Exercise
+    const MatchCollocationsExercise = ({ exercise, onComplete }) => {
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+
+      const handleSelect = (nounIndex, verb) => {
+        setAnswers(prev => {
+          const current = prev[nounIndex] || [];
+          if (current.includes(verb)) return { ...prev, [nounIndex]: current.filter(v => v !== verb) };
+          if (current.length >= 2) return prev;
+          return { ...prev, [nounIndex]: [...current, verb] };
+        });
+      };
+
+      const checkAnswers = () => {
+        setShowResults(true);
+        const allCorrect = exercise.pairs.every((p, i) => {
+          const userVerbs = answers[i] || [];
+          return userVerbs.length === 2 && userVerbs.every(v => p.verbs.includes(v));
+        });
+        if (allCorrect) onComplete?.();
+      };
+
+      const reset = () => { setAnswers({}); setShowResults(false); };
+
+      const allVerbs = exercise.pairs.flatMap(p => p.verbs);
+
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-600 italic">{exercise.instruction}</p>
+          {exercise.pairs.map((pair, index) => {
+            const userVerbs = answers[index] || [];
+            const isCorrect = userVerbs.length === 2 && userVerbs.every(v => pair.verbs.includes(v));
+            return (
+              <div key={index} className={`p-4 rounded-lg ${showResults ? isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' : 'bg-gray-50'}`}>
+                <p className="font-medium mb-2">___ / ___ + <span className="text-blue-700">{pair.noun}</span></p>
+                <div className="flex flex-wrap gap-2">
+                  {allVerbs.filter((v, i, arr) => arr.indexOf(v) === i).map((verb, vi) => (
+                    <button
+                      key={vi}
+                      onClick={() => handleSelect(index, verb)}
+                      className={`px-3 py-1 rounded border transition ${userVerbs.includes(verb) ? 'bg-blue-600 text-white border-blue-600' : 'bg-white border-gray-300 hover:border-blue-400'}`}
+                    >
+                      {verb}
+                    </button>
+                  ))}
+                </div>
+                {showResults && !isCorrect && <p className="text-sm text-red-600 mt-2">Correct: {pair.verbs.join(' / ')}</p>}
+              </div>
+            );
+          })}
+          <div className="flex gap-3">
+            <button onClick={checkAnswers} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Check Answers</button>
+            <button onClick={reset} className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center gap-2"><Icon name="RotateCcw" size={16} /> Reset</button>
+          </div>
+        </div>
+      );
+    };
+
+    // Categorize Exercise
+    const CategorizeExercise = ({ exercise, onComplete }) => {
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+
+      const checkAnswer = (userAnswer, q) => {
+        const ua = (userAnswer || '').toLowerCase().trim();
+        return q.acceptedAnswers.some(a => a.toLowerCase() === ua);
+      };
+
+      const checkAnswers = () => {
+        setShowResults(true);
+        const allCorrect = exercise.questions.every((q, i) => checkAnswer(answers[i], q));
+        if (allCorrect) onComplete?.();
+      };
+
+      const reset = () => { setAnswers({}); setShowResults(false); };
+
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-600 italic">{exercise.instruction}</p>
+          {exercise.questions.map((q, index) => {
+            const isCorrect = checkAnswer(answers[index], q);
+            return (
+              <div key={index} className={`p-4 rounded-lg ${showResults ? isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' : 'bg-gray-50'}`}>
+                <p className="mb-2"><span className="font-mono bg-gray-200 px-2 py-1 rounded">{q.adjectives.join(' / ')}</span></p>
+                <div className="flex items-center gap-2">
+                  <span>Noun:</span>
+                  <input
+                    type="text"
+                    value={answers[index] || ''}
+                    onChange={(e) => setAnswers(prev => ({ ...prev, [index]: e.target.value }))}
+                    className={`px-2 py-1 border rounded w-32 ${showResults ? isCorrect ? 'border-green-500' : 'border-red-400' : 'border-gray-400'}`}
+                  />
+                  <ExerciseResult isCorrect={isCorrect} showResult={showResults} />
+                </div>
+                {showResults && !isCorrect && <p className="text-sm text-red-600 mt-1">Correct: {q.answer}</p>}
+              </div>
+            );
+          })}
+          <div className="flex gap-3">
+            <button onClick={checkAnswers} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Check Answers</button>
+            <button onClick={reset} className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center gap-2"><Icon name="RotateCcw" size={16} /> Reset</button>
+          </div>
+        </div>
+      );
+    };
+
+    // Match Meanings Exercise
+    const MatchMeaningsExercise = ({ exercise, onComplete }) => {
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+
+      const checkAnswers = () => {
+        setShowResults(true);
+        const allCorrect = exercise.questions.every((q, i) => answers[i] === q.meaning);
+        if (allCorrect) onComplete?.();
+      };
+
+      const reset = () => { setAnswers({}); setShowResults(false); };
+
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-600 italic">{exercise.instruction}</p>
+          {exercise.questions.map((q, index) => {
+            const isCorrect = answers[index] === q.meaning;
+            return (
+              <div key={index} className={`p-4 rounded-lg ${showResults ? isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' : 'bg-gray-50'}`}>
+                <p className="mb-3 italic">"{q.sentence}"</p>
+                <select
+                  value={answers[index] || ''}
+                  onChange={(e) => setAnswers(prev => ({ ...prev, [index]: e.target.value }))}
+                  className={`w-full p-2 border rounded ${showResults ? isCorrect ? 'border-green-500 bg-green-50' : 'border-red-400 bg-red-50' : 'border-gray-300'}`}
+                >
+                  <option value="">Select meaning...</option>
+                  {q.options.map((opt, oi) => <option key={oi} value={opt}>{opt}</option>)}
+                </select>
+                {showResults && !isCorrect && <p className="text-sm text-red-600 mt-1">Correct: {q.meaning}</p>}
+              </div>
+            );
+          })}
+          <div className="flex gap-3">
+            <button onClick={checkAnswers} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Check Answers</button>
+            <button onClick={reset} className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center gap-2"><Icon name="RotateCcw" size={16} /> Reset</button>
+          </div>
+        </div>
+      );
+    };
+
+    // Select Incorrect Adverb Exercise
+    const SelectIncorrectAdverbExercise = ({ exercise, onComplete }) => {
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+
+      const checkAnswers = () => {
+        setShowResults(true);
+        const allCorrect = exercise.questions.every((q, i) => answers[i] === q.incorrect);
+        if (allCorrect) onComplete?.();
+      };
+
+      const reset = () => { setAnswers({}); setShowResults(false); };
+
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-600 italic">{exercise.instruction}</p>
+          {exercise.questions.map((q, index) => {
+            const isCorrect = answers[index] === q.incorrect;
+            return (
+              <div key={index} className={`p-4 rounded-lg ${showResults ? isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' : 'bg-gray-50'}`}>
+                <p className="font-medium mb-2"><span className="text-blue-700">{q.adverb}</span> + ___</p>
+                <div className="flex flex-wrap gap-2">
+                  {q.words.map((word, wi) => (
+                    <button
+                      key={wi}
+                      onClick={() => setAnswers(prev => ({ ...prev, [index]: word }))}
+                      className={`px-3 py-1 rounded border transition ${answers[index] === word ? showResults ? isCorrect ? 'bg-green-600 text-white' : 'bg-red-500 text-white' : 'bg-blue-600 text-white' : 'bg-white border-gray-300 hover:border-blue-400'}`}
+                    >
+                      {word}
+                    </button>
+                  ))}
+                </div>
+                {showResults && <p className={`text-sm mt-2 ${isCorrect ? 'text-green-700' : 'text-red-600'}`}>{q.explanation}</p>}
+              </div>
+            );
+          })}
+          <div className="flex gap-3">
+            <button onClick={checkAnswers} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Check Answers</button>
+            <button onClick={reset} className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center gap-2"><Icon name="RotateCcw" size={16} /> Reset</button>
+          </div>
+        </div>
+      );
+    };
+
+    // Word Formation Suffix Exercise
+    const WordFormationSuffixExercise = ({ exercise, onComplete }) => {
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+
+      const checkAnswer = (userAnswer, correctAnswer) => (userAnswer || '').toLowerCase().trim() === correctAnswer.toLowerCase();
+
+      const checkAnswers = () => {
+        setShowResults(true);
+        const allCorrect = exercise.questions.every((q, i) => checkAnswer(answers[i], q.answer));
+        if (allCorrect) onComplete?.();
+      };
+
+      const reset = () => { setAnswers({}); setShowResults(false); };
+
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-600 italic">{exercise.instruction}</p>
+          {exercise.questions.map((q, index) => {
+            const isCorrect = checkAnswer(answers[index], q.answer);
+            const parts = q.sentence.split('___');
+            return (
+              <div key={index} className={`p-4 rounded-lg ${showResults ? isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' : 'bg-gray-50'}`}>
+                <div className="flex items-start gap-3">
+                  <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded font-mono text-sm min-w-[80px] text-center">{q.base}</span>
+                  <p className="flex-1">
+                    {parts[0]}
+                    <input
+                      type="text"
+                      value={answers[index] || ''}
+                      onChange={(e) => setAnswers(prev => ({ ...prev, [index]: e.target.value }))}
+                      className={`mx-1 px-2 py-1 border rounded w-32 ${showResults ? isCorrect ? 'border-green-500 bg-green-100' : 'border-red-400 bg-red-100' : 'border-gray-400'}`}
+                    />
+                    {parts[1]}
+                    <ExerciseResult isCorrect={isCorrect} showResult={showResults} />
+                  </p>
+                </div>
+                {showResults && !isCorrect && <p className="text-sm text-red-600 mt-2 ml-24">Correct: {q.answer}</p>}
+              </div>
+            );
+          })}
+          <div className="flex gap-3">
+            <button onClick={checkAnswers} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Check Answers</button>
+            <button onClick={reset} className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center gap-2"><Icon name="RotateCcw" size={16} /> Reset</button>
+          </div>
+        </div>
+      );
+    };
+
+    // Select Incorrect Modal Exercise
+    const SelectIncorrectModalExercise = ({ exercise, onComplete }) => {
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+
+      const checkAnswers = () => {
+        setShowResults(true);
+        const allCorrect = exercise.questions.every((q, i) => answers[i] === q.incorrect);
+        if (allCorrect) onComplete?.();
+      };
+
+      const reset = () => { setAnswers({}); setShowResults(false); };
+
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-600 italic">{exercise.instruction}</p>
+          {exercise.questions.map((q, index) => {
+            const isCorrect = answers[index] === q.incorrect;
+            return (
+              <div key={index} className={`p-4 rounded-lg ${showResults ? isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' : 'bg-gray-50'}`}>
+                <p className="mb-3">{index + 1}. {q.sentence}</p>
+                <div className="flex flex-wrap gap-2">
+                  {q.options.map((opt, oi) => (
+                    <button
+                      key={oi}
+                      onClick={() => setAnswers(prev => ({ ...prev, [index]: opt }))}
+                      className={`px-4 py-2 rounded border transition ${answers[index] === opt ? showResults ? isCorrect ? 'bg-green-600 text-white' : 'bg-red-500 text-white' : 'bg-blue-600 text-white' : 'bg-white border-gray-300 hover:border-blue-400'}`}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+                {showResults && <p className={`mt-2 text-sm ${isCorrect ? 'text-green-700' : 'text-red-600'}`}>{isCorrect ? 'Correct!' : `The incorrect one is: "${q.incorrect}"`}<br /><span className="text-gray-600">{q.explanation}</span></p>}
+              </div>
+            );
+          })}
+          <div className="flex gap-3">
+            <button onClick={checkAnswers} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Check Answers</button>
+            <button onClick={reset} className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center gap-2"><Icon name="RotateCcw" size={16} /> Reset</button>
+          </div>
+        </div>
+      );
+    };
+
+    // Fill Adverb Pairs Exercise
+    const FillAdverbPairsExercise = ({ exercise, onComplete }) => {
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+
+      const checkAnswer = (userAnswer, correctAnswer) => (userAnswer || '').toLowerCase().trim() === correctAnswer.toLowerCase();
+
+      const checkAnswers = () => {
+        setShowResults(true);
+        const allCorrect = exercise.questions.every((q, i) => checkAnswer(answers[i], q.answer));
+        if (allCorrect) onComplete?.();
+      };
+
+      const reset = () => { setAnswers({}); setShowResults(false); };
+
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-600 italic">{exercise.instruction}</p>
+          <div className="flex flex-wrap gap-2 p-3 bg-blue-50 rounded-lg">
+            <span className="text-blue-700 font-medium">Adverbs:</span>
+            {exercise.wordBank.map((word, i) => <span key={i} className="bg-white px-2 py-1 rounded border text-sm">{word}</span>)}
+          </div>
+          {exercise.questions.map((q, index) => {
+            const isCorrect = checkAnswer(answers[index], q.answer);
+            return (
+              <div key={index} className={`p-4 rounded-lg ${showResults ? isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' : 'bg-gray-50'}`}>
+                <p className="font-medium mb-2">{index + 1}.</p>
+                {q.sentences.map((s, si) => <p key={si} className="text-gray-700 mb-1">• {s}</p>)}
+                <div className="flex items-center gap-3 mt-3">
+                  <span>Answer:</span>
+                  <input type="text" value={answers[index] || ''} onChange={(e) => setAnswers(prev => ({ ...prev, [index]: e.target.value }))} className={`flex-1 max-w-xs p-2 border rounded ${showResults ? isCorrect ? 'border-green-500 bg-green-50' : 'border-red-400 bg-red-50' : 'border-gray-300'}`} placeholder="Type the adverb..." />
+                  <ExerciseResult isCorrect={isCorrect} showResult={showResults} />
+                </div>
+                {showResults && !isCorrect && <p className="mt-2 text-sm text-red-600">Correct: {q.answer}</p>}
+              </div>
+            );
+          })}
+          <div className="flex gap-3">
+            <button onClick={checkAnswers} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Check Answers</button>
+            <button onClick={reset} className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center gap-2"><Icon name="RotateCcw" size={16} /> Reset</button>
+          </div>
+        </div>
+      );
+    };
+
+    // Fill Verb Collocations Exercise
+    const FillVerbCollocationsExercise = ({ exercise, onComplete }) => {
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+
+      const checkAnswer = (userAnswer, q) => {
+        const ua = (userAnswer || '').toLowerCase().trim();
+        return q.acceptedForms.some(f => f.toLowerCase() === ua);
+      };
+
+      const checkAnswers = () => {
+        setShowResults(true);
+        const allCorrect = exercise.questions.every((q, i) => checkAnswer(answers[i], q));
+        if (allCorrect) onComplete?.();
+      };
+
+      const reset = () => { setAnswers({}); setShowResults(false); };
+
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-600 italic">{exercise.instruction}</p>
+          <div className="flex flex-wrap gap-2 p-3 bg-blue-50 rounded-lg">
+            <span className="text-blue-700 font-medium">Verbs:</span>
+            {exercise.wordBank.map((word, i) => <span key={i} className="bg-white px-2 py-1 rounded border text-sm">{word}</span>)}
+          </div>
+          {exercise.questions.map((q, index) => {
+            const isCorrect = checkAnswer(answers[index], q);
+            const parts = q.sentence.split('___');
+            return (
+              <div key={index} className={`p-4 rounded-lg ${showResults ? isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' : 'bg-gray-50'}`}>
+                <p>
+                  {index + 1}. {parts[0]}
+                  <input type="text" value={answers[index] || ''} onChange={(e) => setAnswers(prev => ({ ...prev, [index]: e.target.value }))} className={`mx-1 px-2 py-1 border rounded w-24 ${showResults ? isCorrect ? 'border-green-500 bg-green-100' : 'border-red-400 bg-red-100' : 'border-gray-400'}`} />
+                  {parts[1]}
+                  <ExerciseResult isCorrect={isCorrect} showResult={showResults} />
+                </p>
+                {showResults && !isCorrect && <p className="text-sm text-red-600 mt-1">Correct: {q.answer}</p>}
+              </div>
+            );
+          })}
+          <div className="flex gap-3">
+            <button onClick={checkAnswers} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Check Answers</button>
+            <button onClick={reset} className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center gap-2"><Icon name="RotateCcw" size={16} /> Reset</button>
+          </div>
+        </div>
+      );
+    };
+
+    // Multiple Choice Story Exercise
+    const MultipleChoiceStoryExercise = ({ exercise, onComplete }) => {
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+
+      const checkAnswers = () => {
+        setShowResults(true);
+        const allCorrect = exercise.questions.every((q, i) => answers[i] === q.answer);
+        if (allCorrect) onComplete?.();
+      };
+
+      const reset = () => { setAnswers({}); setShowResults(false); };
+      const score = showResults ? exercise.questions.filter((q, i) => answers[i] === q.answer).length : 0;
+
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-600 italic">{exercise.instruction}</p>
+          <div className="bg-gray-100 p-4 rounded-lg text-sm whitespace-pre-line">{exercise.story}</div>
+          {exercise.questions.map((q, index) => {
+            const isCorrect = answers[index] === q.answer;
+            return (
+              <div key={index} className={`p-4 rounded-lg ${showResults ? isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' : 'bg-gray-50'}`}>
+                <p className="font-medium mb-2">({q.number}) ___</p>
+                <div className="flex flex-wrap gap-2">
+                  {q.options.map((opt, oi) => (
+                    <button key={oi} onClick={() => setAnswers(prev => ({ ...prev, [index]: opt }))} className={`px-4 py-2 rounded border transition ${answers[index] === opt ? showResults ? isCorrect ? 'bg-green-600 text-white' : 'bg-red-500 text-white' : 'bg-blue-600 text-white' : showResults && opt === q.answer ? 'bg-green-200 border-green-400' : 'bg-white border-gray-300 hover:border-blue-400'}`}>
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+          {showResults && <div className={`p-4 rounded-lg ${score === exercise.questions.length ? 'bg-green-100' : 'bg-yellow-100'}`}><p className="font-medium">Score: {score} / {exercise.questions.length}</p></div>}
+          <div className="flex gap-3">
+            <button onClick={checkAnswers} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Check Answers</button>
+            <button onClick={reset} className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center gap-2"><Icon name="RotateCcw" size={16} /> Reset</button>
+          </div>
+        </div>
+      );
+    };
+
+    // Word Formation Text Exercise
+    const WordFormationTextExercise = ({ exercise, onComplete }) => {
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+
+      const checkAnswer = (userAnswer, correctAnswer) => (userAnswer || '').toLowerCase().trim() === correctAnswer.toLowerCase();
+
+      const checkAnswers = () => {
+        setShowResults(true);
+        const allCorrect = exercise.questions.every((q, i) => checkAnswer(answers[i], q.answer));
+        if (allCorrect) onComplete?.();
+      };
+
+      const reset = () => { setAnswers({}); setShowResults(false); };
+
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-600 italic">{exercise.instruction}</p>
+          {exercise.questions.map((q, index) => {
+            const isCorrect = checkAnswer(answers[index], q.answer);
+            const parts = q.sentence.split('___');
+            return (
+              <div key={index} className={`p-4 rounded-lg ${showResults ? isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' : 'bg-gray-50'}`}>
+                <div className="flex items-start gap-3">
+                  <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded font-mono text-sm min-w-[80px] text-center">{q.base}</span>
+                  <p className="flex-1">
+                    {parts[0]}
+                    <input type="text" value={answers[index] || ''} onChange={(e) => setAnswers(prev => ({ ...prev, [index]: e.target.value }))} className={`mx-1 px-2 py-1 border rounded w-32 ${showResults ? isCorrect ? 'border-green-500 bg-green-100' : 'border-red-400 bg-red-100' : 'border-gray-400'}`} />
+                    {parts[1]}
+                    <ExerciseResult isCorrect={isCorrect} showResult={showResults} />
+                  </p>
+                </div>
+                {showResults && !isCorrect && <p className="text-sm text-red-600 mt-2 ml-24">Correct: {q.answer}</p>}
+              </div>
+            );
+          })}
+          <div className="flex gap-3">
+            <button onClick={checkAnswers} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Check Answers</button>
+            <button onClick={reset} className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center gap-2"><Icon name="RotateCcw" size={16} /> Reset</button>
+          </div>
+        </div>
+      );
+    };
+
+    // Exercise Renderer
+    const ExerciseRenderer = ({ exercise, onComplete }) => {
+      const components = {
+        'fill-select': FillSelectExercise,
+        'match-collocations': MatchCollocationsExercise,
+        'categorize': CategorizeExercise,
+        'match-meanings': MatchMeaningsExercise,
+        'select-incorrect': SelectIncorrectAdverbExercise,
+        'word-formation-suffix': WordFormationSuffixExercise,
+        'select-incorrect-modal': SelectIncorrectModalExercise,
+        'fill-adverb-pairs': FillAdverbPairsExercise,
+        'fill-verb-collocations': FillVerbCollocationsExercise,
+        'multiple-choice-story': MultipleChoiceStoryExercise,
+        'word-formation-text': WordFormationTextExercise,
+      };
+      const Component = components[exercise.type];
+      if (!Component) return <p>Exercise type not supported: {exercise.type}</p>;
+      return <Component exercise={exercise} onComplete={onComplete} />;
+    };
+
+    // Theory View
+    const TheoryView = ({ theory }) => {
+      const renderContent = (content) => {
+        return content.split('\n').map((line, i) => {
+          if (line.startsWith('**') && line.endsWith('**')) {
+            return <p key={i} className="font-bold text-gray-800 mt-3">{line.replace(/\*\*/g, '')}</p>;
+          }
+          if (line.startsWith('• **')) {
+            const parts = line.replace('• **', '').split('**');
+            return <p key={i} className="ml-4"><span className="font-semibold">{parts[0]}</span>{parts[1]}</p>;
+          }
+          if (line.startsWith('• ')) {
+            return <p key={i} className="ml-4">{line}</p>;
+          }
+          return <p key={i} className="text-gray-700">{line}</p>;
+        });
+      };
+
+      return (
+        <div className="space-y-6">
+          <h2 className="text-2xl font-bold text-gray-800">Theory: Unit 1</h2>
+          {theory.sections.map((section, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-sm border p-6">
+              <h3 className="text-lg font-semibold text-blue-700 mb-3">{section.title}</h3>
+              <div className="text-gray-700 leading-relaxed space-y-1">
+                {renderContent(section.content)}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    };
+
+    // Exercises List View
+    const ExercisesView = ({ exercises, title, iconName }) => {
+      const [currentExercise, setCurrentExercise] = useState(null);
+      const [completedExercises, setCompletedExercises] = useState(new Set());
+
+      const handleComplete = (exerciseId) => {
+        setCompletedExercises(prev => new Set([...prev, exerciseId]));
+      };
+
+      if (currentExercise) {
+        const exercise = exercises.find(e => e.id === currentExercise);
+        return (
+          <div>
+            <button onClick={() => setCurrentExercise(null)} className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-4">
+              <Icon name="ArrowLeft" size={18} /> Back to exercises
+            </button>
+            <div className="bg-white rounded-lg shadow-sm border p-6">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">{exercise.title}</h3>
+              <ExerciseRenderer exercise={exercise} onComplete={() => handleComplete(exercise.id)} />
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+            <Icon name={iconName} size={24} /> {title}
+          </h2>
+          <p className="text-gray-600">Complete the exercises to practice what you've learned.</p>
+          {exercises.map((exercise) => (
+            <button
+              key={exercise.id}
+              onClick={() => setCurrentExercise(exercise.id)}
+              className={`w-full p-4 rounded-lg border text-left transition hover:shadow-md flex items-center justify-between ${completedExercises.has(exercise.id) ? 'bg-green-50 border-green-300' : 'bg-white border-gray-200 hover:border-blue-300'}`}
+            >
+              <div className="flex items-center gap-3">
+                {completedExercises.has(exercise.id) ? <Icon name="CheckCircle" size={24} className="text-green-600" /> : <Icon name="PenTool" size={24} className="text-gray-400" />}
+                <span className="font-medium text-gray-800">{exercise.title}</span>
+              </div>
+              <Icon name="ChevronRight" size={20} className="text-gray-400" />
+            </button>
+          ))}
+        </div>
+      );
+    };
+
+    // Unit Page
+    const UnitPage = ({ unitId, onBack }) => {
+      const unit = unitsData[unitId];
+      const [activeTab, setActiveTab] = useState('theory');
+      const isUnit1 = unitId === 1;
+
+      const tabs = [
+        { id: 'theory', label: 'Theory', icon: 'BookOpen' },
+        { id: 'sb-exercises', label: 'Student Book', icon: 'FileText' },
+        { id: 'wb-exercises', label: 'Workbook', icon: 'Notebook' },
+      ];
+
+      return (
+        <div className="min-h-screen bg-gray-50">
+          <header className="bg-white border-b sticky top-0 z-10">
+            <div className="max-w-4xl mx-auto px-4 py-4">
+              <button onClick={onBack} className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-2">
+                <Icon name="ArrowLeft" size={18} /> Back to Units
+              </button>
+              <h1 className="text-2xl font-bold text-gray-800">{unit.title}</h1>
+              <p className="text-gray-600">{unit.description}</p>
+            </div>
+          </header>
+
+          <nav className="bg-white border-b">
+            <div className="max-w-4xl mx-auto px-4">
+              <div className="flex overflow-x-auto">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`flex items-center gap-2 px-4 py-3 border-b-2 transition whitespace-nowrap ${activeTab === tab.id ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-600 hover:text-gray-800'}`}
+                  >
+                    <Icon name={tab.icon} size={18} />
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </nav>
+
+          <main className="max-w-4xl mx-auto px-4 py-6">
+            {!isUnit1 ? (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-8 text-center">
+                <Icon name="GraduationCap" size={48} className="mx-auto text-yellow-600 mb-4" />
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">Coming Soon</h2>
+                <p className="text-gray-600">This unit is not yet available. Only Unit 1 is currently implemented.</p>
+              </div>
+            ) : (
+              <>
+                {activeTab === 'theory' && <TheoryView theory={unit1Theory} />}
+                {activeTab === 'sb-exercises' && <ExercisesView exercises={unit1SBExercises} title="Student Book Exercises" iconName="FileText" />}
+                {activeTab === 'wb-exercises' && <ExercisesView exercises={unit1WBExercises} title="Workbook Exercises" iconName="Notebook" />}
+              </>
+            )}
+          </main>
+        </div>
+      );
+    };
+
+    // Home Page
+    const HomePage = ({ onSelectUnit }) => {
+      return (
+        <div className="min-h-screen bg-gray-50">
+          <header className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+            <div className="max-w-4xl mx-auto px-4 py-12 text-center">
+              <div className="flex justify-center mb-4"><Icon name="Book" size={48} /></div>
+              <h1 className="text-3xl font-bold mb-2">Ready for Advanced</h1>
+              <p className="text-blue-100">C1 Advanced English Practice</p>
+              <p className="text-blue-200 text-sm mt-2">Based on Ready for Advanced 4th Edition</p>
+            </div>
+          </header>
+
+          <main className="max-w-4xl mx-auto px-4 py-8">
+            <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
+              <Icon name="GraduationCap" size={24} /> Units
+            </h2>
+            <div className="grid gap-4">
+              {Object.entries(unitsData).map(([id, unit]) => {
+                const isAvailable = parseInt(id) === 1;
+                return (
+                  <button
+                    key={id}
+                    onClick={() => onSelectUnit(parseInt(id))}
+                    disabled={!isAvailable}
+                    className={`p-6 rounded-lg border text-left transition ${isAvailable ? 'bg-white border-gray-200 hover:border-blue-400 hover:shadow-md cursor-pointer' : 'bg-gray-100 border-gray-200 cursor-not-allowed opacity-60'}`}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-800 mb-1">{unit.title}</h3>
+                        <p className="text-gray-600 text-sm">{unit.description}</p>
+                        {!isAvailable && <span className="inline-block mt-2 text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded">Coming soon</span>}
+                      </div>
+                      <Icon name="ChevronRight" size={24} className={isAvailable ? 'text-gray-400' : 'text-gray-300'} />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </main>
+
+          <footer className="bg-white border-t mt-12">
+            <div className="max-w-4xl mx-auto px-4 py-6 text-center text-gray-500 text-sm">
+              <p>English Practice App - Ready for C1 Advanced</p>
+              <p>Student Book + Workbook Exercises</p>
+            </div>
+          </footer>
+        </div>
+      );
+    };
+
+    // Main App
+    function App() {
+      const [currentUnit, setCurrentUnit] = useState(null);
+      if (currentUnit) return <UnitPage unitId={currentUnit} onBack={() => setCurrentUnit(null)} />;
+      return <HomePage onSelectUnit={setCurrentUnit} />;
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
