@@ -570,42 +570,105 @@
         { adverb: "utterly", words: ["ridiculous", "disgraceful", "opposed", "qualified"], incorrect: "qualified", explanation: "We say 'utterly ridiculous/disgraceful' but 'fully qualified'" },
         { adverb: "bitterly", words: ["resent", "regret", "disappointed", "dislike"], incorrect: "dislike", explanation: "We say 'bitterly resent/regret/disappointed' but 'strongly dislike'" }
       ]},
-      { id: "sb1.4", title: "Word Formation: Noun Suffixes", type: "word-formation-suffix", instruction: "Complete with a noun form of the word in CAPITALS.", questions: [
-        { sentence: "Union members expressed their ___ of the management's offer.", base: "APPROVE", answer: "disapproval" },
-        { sentence: "In her ___ to receive the award, she almost tripped.", base: "EAGER", answer: "eagerness" },
-        { sentence: "Her run paled into ___ when compared with the marathon.", base: "SIGNIFY", answer: "insignificance" },
-        { sentence: "The ___ of the device is what made it so popular.", base: "SIMPLE", answer: "simplicity" },
-        { sentence: "I have been sworn to ___ on the matter.", base: "SECRET", answer: "secrecy" },
-        { sentence: "The cost of ___ has increased by 10 per cent.", base: "MEMBER", answer: "membership" },
+      { id: "sb1.4", title: "Word Formation: Noun Suffixes", type: "word-formation-suffix", instruction: "Complete the sentences with an appropriate noun form of the word in capitals. Use each suffix in the box once only and make any further spelling changes necessary. The noun you require may also need a plural ending or a negative prefix (un-, in-, im-, dis-, etc).\n\nSuffixes: -age, -al, -ance, -ation, -cy, -ence, -hood, -iety, -ity, -ment, -ness, -ship, -ure", questions: [
+        { sentence: "___ are available from 3.30 pm in the main hall.", base: "REFRESH", answer: "refreshments" },
+        { sentence: "Union members expressed their ___ of the management's offer by walking out of the meeting.", base: "APPROVE", answer: "disapproval" },
+        { sentence: "In her ___ to receive the award, she almost tripped on the stage.", base: "EAGER", answer: "eagerness" },
+        { sentence: "In the interests of safety, a number of standard ___ need to be followed.", base: "PROCEED", answer: "procedures" },
+        { sentence: "Her 5000-metre run paled into ___ when compared with the marathon her grandfather completed the following week.", base: "SIGNIFY", answer: "insignificance" },
+        { sentence: "The ___ of the device is what has made it so popular.", base: "SIMPLE", answer: "simplicity" },
+        { sentence: "I cannot comment; I have been sworn to ___ on the matter.", base: "SECRET", answer: "secrecy" },
+        { sentence: "The cost of ___ has increased by 10 per cent this year.", base: "MEMBER", answer: "membership" },
+        { sentence: "Customers will be required to pay for any ___.", base: "BREAK", answer: "breakages" },
+        { sentence: "There is every ___ that prices will continue to rise next year.", base: "LIKELY", answer: "likelihood" },
+        { sentence: "He valued his ___ too much to ever want to get married.", base: "DEPEND", answer: "independence" },
         { sentence: "It's natural to experience ___ on your first day at work.", base: "ANXIOUS", answer: "anxiety" }
       ]}
     ];
 
     const unit1WBExercises = [
-      { id: "wb1.1", title: "Modal Verbs - Find the Incorrect One", type: "select-incorrect-modal", instruction: "One of the three alternatives is INCORRECT. Select it.", questions: [
-        { sentence: "You ___ enter the building without an employee pass.", options: ["might not", "may not", "cannot"], incorrect: "might not", explanation: "'Might not' doesn't work for prohibition/rules." },
+      { id: "wb1.1", title: "Modal Verbs - Cross Out Incorrect", type: "select-incorrect-modal", instruction: "In 1-5, one of the three alternatives is incorrect. Cross it out. There is an example at the beginning (0).", questions: [
         { sentence: "You ___ have told me you weren't coming home for dinner!", options: ["might", "may", "could"], incorrect: "may", explanation: "'May have' is rarely used for criticism/reproach." },
-        { sentence: "That's not my handwriting – it ___ be Lara's, though.", options: ["might", "could", "can"], incorrect: "can", explanation: "'Can' is not typically used for speculation." },
-        { sentence: "You ___ as well try and enjoy yourself.", options: ["might", "may", "could"], incorrect: "could", explanation: "'Could as well' is not a standard expression." }
+        { sentence: "That's not my handwriting – it ___ be Lara's, though.", options: ["might", "could", "can"], incorrect: "can", explanation: "'Can' is not typically used for speculation about the present." },
+        { sentence: "Sam ___ not have been lying to Krysta, but she'll never know for sure.", options: ["might", "may", "could"], incorrect: "could", explanation: "'Could not have' suggests impossibility, not uncertainty." },
+        { sentence: "William ___ at least offer to pay for the damage he caused!", options: ["might", "may", "could"], incorrect: "may", explanation: "'May' is less common for expressing criticism/annoyance." },
+        { sentence: "I know parties aren't your thing, but you ___ as well try and enjoy yourself.", options: ["might", "may", "could"], incorrect: "could", explanation: "'Could as well' is not a standard expression. Use 'might/may as well'." }
       ]},
-      { id: "wb1.2", title: "Adverbs of Degree - Fill in the Blanks", type: "fill-adverb-pairs", instruction: "Use the same adverb for BOTH gaps in each pair.", wordBank: ["bitterly", "entirely", "fiercely", "fully", "highly", "perfectly", "quite", "utterly", "wholly"], questions: [
-        { sentences: ["Her behaviour was ___ disgraceful.", "I was ___ exhausted."], answer: "utterly" },
+      { id: "wb1.2", title: "Adverbs of Degree - Fill in the Blanks", type: "fill-adverb-pairs", instruction: "Complete each gap with an adverb from the box. Use the same adverb for both gaps in each pair.", wordBank: ["bitterly", "entirely", "fiercely", "fully", "highly", "perfectly", "quite", "utterly", "wholly"], questions: [
+        { sentences: ["Her behaviour was ___ disgraceful.", "By the time I arrived, I was ___ exhausted."], answer: "utterly" },
         { sentences: ["As a child, she was ___ gifted.", "You'll only succeed if you're ___ motivated."], answer: "highly" },
-        { sentences: ["We're ___ booked on those dates.", "All consultants are ___ qualified."], answer: "fully" },
-        { sentences: ["This service is ___ free of charge.", "I'm not ___ sure what to do."], answer: "entirely" },
-        { sentences: ["It's ___ normal to be nervous.", "I'm ___ capable of deciding."], answer: "perfectly" },
-        { sentences: ["I ___ resented my colleague.", "I was ___ disappointed."], answer: "bitterly" },
-        { sentences: ["He's always been ___ ambitious.", "They are ___ loyal to their boss."], answer: "fiercely" }
+        { sentences: ["I'm afraid we're ___ booked on those dates.", "All our consultants are ___ qualified."], answer: "fully" },
+        { sentences: ["This service is ___ free of charge to our existing customers.", "I'm not ___ sure what to do next."], answer: "entirely" },
+        { sentences: ["Don't worry. It's ___ normal to be nervous.", "Stop telling me what to do! I'm ___ capable of making my own decisions."], answer: "perfectly" },
+        { sentences: ["I ___ resented my colleague for landing the promotion that I wanted.", "I was ___ disappointed by my results."], answer: "bitterly" },
+        { sentences: ["He's always been ___ ambitious – he won't let anything stand in his way.", "They are all ___ loyal to their old boss, so it will be difficult to win them over."], answer: "fiercely" },
+        { sentences: ["Tom is ___ angry with Maria.", "Winning a gold medal at her age is ___ remarkable."], answer: "quite" },
+        { sentences: ["That kind of behaviour at work is ___ unacceptable.", "The mayor wasn't ___ to blame for the crisis."], answer: "wholly" }
       ]},
-      { id: "wb1.3", title: "Grace Under Fire - Adjective + Noun", type: "multiple-choice-story", instruction: "Choose the most suitable adjective for each gap.", story: "Grace always had a (1)___ ambition to open her own restaurant. She thought she stood a (2)___ chance of success.\n\nGrace never imagined all the (3)___ challenges she would face. Her (4)___ motivation had always been to cook great food rather than to make money – and her first restaurant was a (5)___ failure.\n\nThen she was given a (6)___ chance when investors offered to help. Second time round, Grace's Place has been a (7)___ success.", questions: [
+      { id: "wb1.3", title: "Verb + Noun Collocations", type: "fill-select", instruction: "Complete each sentence with the correct form of a verb from the box.", wordBank: ["enjoy", "face", "jump", "lack", "leave", "meet", "realise", "rise", "stand"], questions: [
+        { sentence: "The organisers said I could use their computer for my presentation, but I decided to ___ nothing to chance and took my laptop just in case.", answer: "leave" },
+        { sentence: "At first, we thought you wouldn't cope with all your new responsibilities, but we're delighted with the way you've ___ to the challenge.", answer: "risen" },
+        { sentence: "Helen decided to enter the race, even though she didn't ___ a chance of winning.", answer: "stand" },
+        { sentence: "At one point, I was tempted to close my business because of all the formidable challenges I ___, but somehow I made it through.", answer: "faced" },
+        { sentence: "I've fulfilled most of my ambitions, but there's one that I'll probably never ___: to become an internet influencer.", answer: "realise" },
+        { sentence: "Bryan's attempts at humour were ___ with complete failure – he just came across as rude.", answer: "met" },
+        { sentence: "When I was a singer, I ___ limited success for a few years, but it didn't last long.", answer: "enjoyed" },
+        { sentence: "The problem with most entrepreneurs is not that they ___ motivation, but rather that they don't know how to turn that motivation into concrete results.", answer: "lack" },
+        { sentence: "I'd always dreamt of living abroad, so when I was offered an opportunity to work in our global HQ, I ___ at the chance.", answer: "jumped" }
+      ]},
+      { id: "wb1.4", title: "Grace Under Fire - Adjective + Noun", type: "multiple-choice-story", instruction: "Choose the most suitable adjective for each gap.", story: "Grace Spellacy always enjoyed cooking, but it wasn't enough just to cook for her friends and family. Since early childhood, she'd always had a (1)___ ambition to open her own restaurant one day. Of course, Grace realised that she couldn't simply open a restaurant and expect to be (2)___ success, but on the other hand, she thought she stood a (3)___ chance of success.\n\nGrace certainly never imagined all the (4)___ challenges she would face, especially staff management and marketing. The problem was that her (5)___ motivation had always been to cook great food rather than to make money – and, as a result, her first restaurant was an extremely (6)___ failure. For a while, it looked as if Grace would never fulfil her (7)___ ambition, but then she was given a (8)___ chance when a group of investors offered to go into business with her. Fortunately, they knew a lot more about management and marketing, allowing Grace to focus on the food. Second time round, Grace's Place has been a (9)___ success.", questions: [
         { number: 1, options: ["burning", "complete", "resounding"], answer: "burning" },
-        { number: 2, options: ["fair", "formidable", "major"], answer: "fair" },
-        { number: 3, options: ["daunting", "strong", "total"], answer: "daunting" },
-        { number: 4, options: ["burning", "formidable", "primary"], answer: "primary" },
-        { number: 5, options: ["costly", "poor", "strong"], answer: "costly" },
-        { number: 6, options: ["complete", "primary", "second"], answer: "second" },
-        { number: 7, options: ["burning", "resounding", "strong"], answer: "resounding" }
-      ]}
+        { number: 2, options: ["a main", "an overnight", "a strong"], answer: "an overnight" },
+        { number: 3, options: ["fair", "formidable", "major"], answer: "fair" },
+        { number: 4, options: ["daunting", "strong", "total"], answer: "daunting" },
+        { number: 5, options: ["burning", "formidable", "primary"], answer: "primary" },
+        { number: 6, options: ["costly", "poor", "strong"], answer: "costly" },
+        { number: 7, options: ["daunting", "huge", "lifelong"], answer: "lifelong" },
+        { number: 8, options: ["complete", "primary", "second"], answer: "second" },
+        { number: 9, options: ["burning", "resounding", "strong"], answer: "resounding" }
+      ]},
+      { id: "wb1.5", title: "Key Word Transformation", type: "key-word-transformation", instruction: "Complete the second sentence so that it has a similar meaning to the first sentence, using the word given. Do not change the word given. You must use between three and six words, including the word given.", questions: [
+        { first: "We made limited progress because Rebecca wasn't willing to cooperate.", keyword: "DUE", second: "___ cooperate, we hardly made any progress.", answer: "Due to Rebecca's unwillingness to" },
+        { first: "Richard said he wasn't pleased with the way we had performed.", keyword: "EXPRESSED", second: "Richard ___ with the way we had performed.", answer: "expressed displeasure" },
+        { first: "I don't see how my age is relevant to whether I'm suitable for the job or not.", keyword: "FAIL", second: "I ___ my age to my suitability for the job.", answer: "fail to see the relevance of" },
+        { first: "Annoyingly, Fiona tends to underestimate how much work I do for her.", keyword: "AN", second: "Fiona has ___ to underestimate how much work I do for her.", answer: "an annoying tendency" },
+        { first: "It wasn't convenient to have to go by bus, but I became accustomed to it eventually.", keyword: "USED", second: "It took me a long time to ___ of having to go by bus.", answer: "get used to the inconvenience" }
+      ]},
+      { id: "wb1.6", title: "The Price of Success - Word Formation", type: "word-formation-suffix", instruction: "For questions 1-8, read the text below. Use the word given in capitals at the end of some of the lines to form a word that fits in the gap in the same line.", questions: [
+        { sentence: "When you witness the incredible achievements of young athletes, it's tempting to feel a pang of (1) ___ at their success.", base: "JEALOUS", answer: "jealousy" },
+        { sentence: "– and their sheer luck in having been born with such amazing talents and (2) ___.", base: "ABLE", answer: "abilities" },
+        { sentence: "However, it's important to realise that this success is the result of years of continuous efforts in (3) ___ of their goals.", base: "PURSUE", answer: "pursuit" },
+        { sentence: "For many athletes, the price of success has been the sacrifice of anything resembling a normal (4) ___,", base: "CHILD", answer: "childhood" },
+        { sentence: "such as time spent playing games for fun, hanging out with friends or simply relaxing for (5) ___.", base: "PLEASE", answer: "pleasure" },
+        { sentence: "Instead, they are likely to have spent every waking hour training (6) ___ for their big moment.", base: "RELENT", answer: "relentlessly" },
+        { sentence: "They have probably endured years of dieting, injuries and mental and physical (7) ___,", base: "EXHAUST", answer: "exhaustion" },
+        { sentence: "So next time you feel jealous of a 'lucky' athlete competing for glory, remember that he or she might be feeling just as (8) ___ of you and the 'normal' life you have lived.", base: "ENVY", answer: "envious" }
+      ]},
+      { id: "wb1.7", title: "Word Formation - Noun Suffixes", type: "cross-out-different-suffix", instruction: "Cross out the word in each set that takes a different noun suffix.", questions: [
+        { words: ["aware", "child", "conscious", "useful"], different: "child", suffix: "-ness vs -hood", explanation: "aware→awareness, conscious→consciousness, useful→usefulness (-ness), but child→childhood (-hood)" },
+        { words: ["fail", "mix", "seize", "survive"], different: "seize", suffix: "-ure vs -ure", explanation: "fail→failure, mix→mixture, survive→survival, but seize→seizure (different pattern)" },
+        { words: ["adapt", "clarify", "realise", "settle"], different: "clarify", suffix: "-ation vs -ication", explanation: "adapt→adaptation, realise→realisation, settle→settlement, but clarify→clarification" },
+        { words: ["knight", "lively", "refer", "sister"], different: "lively", suffix: "-hood vs -ness", explanation: "knight→knighthood, sister→sisterhood, refer→reference, but lively→liveliness" },
+        { words: ["cover", "exist", "interfere", "occur"], different: "cover", suffix: "-ence vs -age", explanation: "exist→existence, interfere→interference, occur→occurrence, but cover→coverage" },
+        { words: ["establish", "harass", "replace", "suitable"], different: "suitable", suffix: "-ment vs -ity", explanation: "establish→establishment, harass→harassment, replace→replacement, but suitable→suitability" },
+        { words: ["accept", "allow", "disturb", "fix"], different: "fix", suffix: "-ance vs -ture", explanation: "accept→acceptance, allow→allowance, disturb→disturbance, but fix→fixture" },
+        { words: ["deficient", "literate", "modify", "redundant"], different: "modify", suffix: "-cy vs -ication", explanation: "deficient→deficiency, literate→literacy, redundant→redundancy, but modify→modification" },
+        { words: ["carry", "owner", "percent", "wreck"], different: "carry", suffix: "-age vs -ship", explanation: "owner→ownership, percent→percentage, wreck→wreckage, but carry→carriage" },
+        { words: ["liable", "pure", "ready", "stable"], different: "ready", suffix: "-ity vs -ness", explanation: "liable→liability, pure→purity, stable→stability, but ready→readiness" },
+        { words: ["acquaint", "reader", "scholar", "sponsor"], different: "acquaint", suffix: "-ship vs -ance", explanation: "reader→readership, scholar→scholarship, sponsor→sponsorship, but acquaint→acquaintance" },
+        { words: ["dismiss", "refuse", "private", "withdraw"], different: "private", suffix: "-al vs -cy", explanation: "dismiss→dismissal, refuse→refusal, withdraw→withdrawal, but private→privacy" }
+      ]},
+      { id: "wb1.8", title: "Modal Verbs - Word Reorder", type: "word-reorder", instruction: "Reorder the words in italics to complete the dialogue.",
+        dialogue: "A: Guess what? I've come up with a genius new business idea.\nB: What happened to Socks for Dogs? You (1) ___ already!\nA: Yeah it turns out there (2) ___ I thought.\nB: Well, I (3) ___. So, go on then. You (4) ___ about this week's crazy scheme.\nA: Hey (5) ___ pretend to be supportive!\nB: Sorry. You're right, please (6) ___ your wonderful idea?\nA: Hats for Cats.\nB: Hmm....",
+        questions: [
+          { number: 1, scrambled: "given / have / up / it / can't / on / given", answer: "can't have given up on it" },
+          { number: 2, scrambled: "demand / not / as / be / might / as / much", answer: "might not be as much demand as" },
+          { number: 3, scrambled: "have / told / that / could / you", answer: "could have told you that" },
+          { number: 4, scrambled: "as / me / may / tell / well", answer: "may as well tell me/might as well tell me" },
+          { number: 5, scrambled: "least / at / you / could", answer: "at least you could" },
+          { number: 6, scrambled: "me / about / you / can / tell", answer: "can you tell me about" }
+        ]
+      }
     ];
 
     // ============================================
@@ -882,8 +945,93 @@
       );
     };
 
+    const KeyWordTransformationExercise = ({ exercise, onComplete }) => {
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+      const check = (ua, ca) => {
+        const userWords = (ua || '').toLowerCase().trim().split(/\s+/).filter(w => w);
+        const correctWords = ca.toLowerCase().split(/\s+/).filter(w => w);
+        // Check if key words are present
+        return correctWords.every(w => userWords.some(uw => uw.includes(w) || w.includes(uw)));
+      };
+      const checkAll = () => { setShowResults(true); if (exercise.questions.every((q, i) => check(answers[i], q.answer))) onComplete?.(); };
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-600 whitespace-pre-line">{exercise.instruction}</p>
+          {exercise.questions.map((q, i) => {
+            const ok = check(answers[i], q.answer);
+            return (<div key={i} className={`p-4 rounded-lg ${showResults ? ok ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' : 'bg-slate-50'}`}>
+              <p className="text-gray-800 mb-2">{i + 1}. {q.first}</p>
+              <p className="font-semibold text-blue-700 mb-2">{q.keyword}</p>
+              <div className="flex items-start gap-2 flex-wrap">
+                <input type="text" value={answers[i] || ''} onChange={e => setAnswers(p => ({...p, [i]: e.target.value}))} className={`flex-1 min-w-[250px] p-2 border rounded ${showResults ? ok ? 'border-green-500 bg-green-50' : 'border-red-400 bg-red-50' : 'border-gray-300'}`} placeholder="Type your answer..."/>
+                <span className="text-gray-600 py-2">{q.second.split('___')[1] || ''}</span>
+                <ExerciseResult isCorrect={ok} showResult={showResults} />
+              </div>
+              {showResults && !ok && <p className="text-sm text-red-600 mt-2">Suggested answer: <span className="font-medium">{q.answer}</span></p>}
+            </div>);
+          })}
+          <div className="flex gap-3"><button onClick={checkAll} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Check Answers</button><button onClick={() => {setAnswers({}); setShowResults(false);}} className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 flex items-center gap-2"><Icon name="RotateCcw" size={16} /> Reset</button></div>
+        </div>
+      );
+    };
+
+    const CrossOutDifferentSuffixExercise = ({ exercise, onComplete }) => {
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+      const checkAll = () => { setShowResults(true); if (exercise.questions.every((q, i) => answers[i] === q.different)) onComplete?.(); };
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-600">{exercise.instruction}</p>
+          {exercise.questions.map((q, i) => {
+            const ok = answers[i] === q.different;
+            return (<div key={i} className={`p-4 rounded-lg ${showResults ? ok ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' : 'bg-slate-50'}`}>
+              <p className="font-medium mb-3">{i + 1}.</p>
+              <div className="flex flex-wrap gap-2">
+                {q.words.map((w, wi) => (
+                  <button key={wi} onClick={() => setAnswers(p => ({...p, [i]: w}))} className={`px-4 py-2 rounded border transition ${answers[i] === w ? showResults ? ok ? 'bg-green-600 text-white line-through' : 'bg-red-500 text-white' : 'bg-blue-600 text-white line-through' : 'bg-white border-gray-300 hover:border-blue-400'}`}>{w}</button>
+                ))}
+              </div>
+              {showResults && <p className={`mt-2 text-sm ${ok ? 'text-green-700' : 'text-red-600'}`}>{q.explanation}</p>}
+            </div>);
+          })}
+          <div className="flex gap-3"><button onClick={checkAll} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Check Answers</button><button onClick={() => {setAnswers({}); setShowResults(false);}} className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 flex items-center gap-2"><Icon name="RotateCcw" size={16} /> Reset</button></div>
+        </div>
+      );
+    };
+
+    const WordReorderExercise = ({ exercise, onComplete }) => {
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+      const normalizeAnswer = (str) => (str || '').toLowerCase().replace(/['']/g, "'").replace(/\s+/g, ' ').trim();
+      const check = (ua, ca) => {
+        const userNorm = normalizeAnswer(ua);
+        const correctOptions = ca.split('/').map(normalizeAnswer);
+        return correctOptions.some(opt => userNorm === opt || userNorm.includes(opt));
+      };
+      const checkAll = () => { setShowResults(true); if (exercise.questions.every((q, i) => check(answers[i], q.answer))) onComplete?.(); };
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-600 whitespace-pre-line">{exercise.instruction}</p>
+          {exercise.dialogue && <div className="bg-slate-100 p-4 rounded-lg text-sm whitespace-pre-line border mb-4 font-mono">{exercise.dialogue}</div>}
+          {exercise.questions.map((q, i) => {
+            const ok = check(answers[i], q.answer);
+            return (<div key={i} className={`p-4 rounded-lg ${showResults ? ok ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' : 'bg-slate-50'}`}>
+              <p className="mb-2 text-gray-700">({q.number}) <span className="font-mono text-blue-700 bg-blue-50 px-2 py-1 rounded">{q.scrambled}</span></p>
+              <div className="flex items-center gap-2 flex-wrap">
+                <input type="text" value={answers[i] || ''} onChange={e => setAnswers(p => ({...p, [i]: e.target.value}))} className={`flex-1 min-w-[200px] p-2 border rounded ${showResults ? ok ? 'border-green-500 bg-green-50' : 'border-red-400 bg-red-50' : 'border-gray-300'}`} placeholder="Reorder the words..."/>
+                <ExerciseResult isCorrect={ok} showResult={showResults} />
+              </div>
+              {showResults && !ok && <p className="text-sm text-red-600 mt-1">Correct: {q.answer}</p>}
+            </div>);
+          })}
+          <div className="flex gap-3"><button onClick={checkAll} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Check Answers</button><button onClick={() => {setAnswers({}); setShowResults(false);}} className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 flex items-center gap-2"><Icon name="RotateCcw" size={16} /> Reset</button></div>
+        </div>
+      );
+    };
+
     const ExerciseRenderer = ({ exercise, onComplete }) => {
-      const components = { 'fill-select': FillSelectExercise, 'match-meanings': MatchMeaningsExercise, 'select-incorrect': SelectIncorrectAdverbExercise, 'word-formation-suffix': WordFormationSuffixExercise, 'select-incorrect-modal': SelectIncorrectModalExercise, 'fill-adverb-pairs': FillAdverbPairsExercise, 'multiple-choice-story': MultipleChoiceStoryExercise, 'error-correction': ErrorCorrectionExercise, 'word-formation-table': WordFormationTableExercise };
+      const components = { 'fill-select': FillSelectExercise, 'match-meanings': MatchMeaningsExercise, 'select-incorrect': SelectIncorrectAdverbExercise, 'word-formation-suffix': WordFormationSuffixExercise, 'select-incorrect-modal': SelectIncorrectModalExercise, 'fill-adverb-pairs': FillAdverbPairsExercise, 'multiple-choice-story': MultipleChoiceStoryExercise, 'error-correction': ErrorCorrectionExercise, 'word-formation-table': WordFormationTableExercise, 'key-word-transformation': KeyWordTransformationExercise, 'cross-out-different-suffix': CrossOutDifferentSuffixExercise, 'word-reorder': WordReorderExercise };
       const C = components[exercise.type];
       return C ? <C exercise={exercise} onComplete={onComplete} /> : <p>Exercise type not supported.</p>;
     };
